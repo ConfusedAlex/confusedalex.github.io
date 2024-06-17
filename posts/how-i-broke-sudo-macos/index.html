@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to my little corner of the internet :)">
+    <title>confusedalex | How I broke sudo on my Dads Mac and how I fixed it</title>
+    
+    <link rel="stylesheet" href="https://confusedalex.dev/style.css?h=9d7ecd4f8880be528465">
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="Feed" href="https://confusedalex.dev/atom.xml">
+    
+    <script data-goatcounter="https://stats.confusedalex.dev/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+    
+<header class="space">
+    <a href="https:&#x2F;&#x2F;confusedalex.dev">&LeftArrow; Home</a>
+</header>
+
+    
+<main>
+    <h1>How I broke sudo on my Dads Mac and how I fixed it</h1>
+    
+    <p class="secondary">19 January, 2024</p>
+    
+    <div class="space"></div>
+    <h1 id="prologue">Prologue</h1>
+<p>Currently, I'm in the process of migrating my Steam Deck to NixOS. Today finally arrived my 1 TB NVMe, so I rushed to installing it and reinstalling NixOS as I already had a working configuration. The annoying part is, that, when using <a href="https://github.com/Jovian-Experiments/Jovian-NixOS">Jovian-NixOS</a> you need to compile the kernel. As this takes long and my father owns a M1 Mac, I thought about building my NixOS configuration on the mac and copying it to the Steam Deck.</p>
+<h1 id="the-problem">The Problem</h1>
+<p>I then installed Nix on the Mac and got everything working, but as I wanted to build my NixOS Configuration on the Mac, the build failed. It failed, because I couldn't enter the sudo password. After much browsing the web, I wanted to make sudo passwordless. So I open <code>visudo</code> and changed</p>
+<pre data-lang="bash" style="background-color:#282828;color:#fdf4c1aa;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#fdf4c1;">%admin ALL=(ALL</span><span>) </span><span style="color:#fdf4c1;">ALL
+</span></code></pre>
+<p>to</p>
+<pre data-lang="bash" style="background-color:#282828;color:#fdf4c1aa;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#fdf4c1;">%admin ALL=(ALL</span><span>) </span><span style="color:#fdf4c1;">:NOPASSWD ALL
+</span></code></pre>
+<p>Do you see the mistake? It's the wrong place column. But I was in a rush, saved the file, wanted to test out my new fancy passwordless sudo by running <code>sudo echo test</code> and got greeted by a <code>alex is not in suderos file</code>.</p>
+<h1 id="the-journey-begins">The Journey begins</h1>
+<h2 id="try-1">Try 1</h2>
+<p>I tried out the <a href="https://superuser.com/a/1368278">here</a> described “Finder” solution but failed. I just couldn't change the permission back. An hour later, I moved on to recovery mode.</p>
+<h2 id="try-2-recovery-mode-my-savior">Try 2 — Recovery Mode, my savior</h2>
+<p>So, I finally booted into recovery mode, and logged in. Then mounted the Data disk via the disk utility program.<br />
+Now I could open a terminal, navigate to <code>/foo/bar/etc</code> and repair the file permission while also fixing the typo.</p>
+<h1 id="what-i-ve-learned">What I've learned</h1>
+<ol>
+<li>If visudo asks you if you really want to save the File, don't blindly type yes!</li>
+<li>root is your friend</li>
+</ol>
+<p>I would love to hear about your funny tech fails. Just send me an email.</p>
+
+</main>
+<footer>
+    <script src="https://giscus.app/client.js"
+        data-repo="confusedalex/blog"
+        data-repo-id="R_kgDOLBTiSw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOLBTiS84CcObr"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="noborder_dark"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</footer>
+
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="https://confusedalex.dev/icons/dark_mode.svg" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="https://confusedalex.dev/icons/light_mode.svg" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.body.classList;
+        const getSessionTheme = sessionStorage.getItem("theme");
+        if (getSessionTheme === "dark") {
+            cls.toggle("dark-mode", true);
+        } else if (getSessionTheme === "light") {
+            cls.toggle("dark-mode", false);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            cls.toggle("dark-mode", true);
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", true);
+            sessionStorage.setItem("theme", "dark");
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", false);
+            sessionStorage.setItem("theme", "light");
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>

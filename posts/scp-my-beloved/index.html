@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Welcome to my little corner of the internet :)">
+    <title>confusedalex | SCP, my beloved</title>
+    
+    <link rel="stylesheet" href="https://confusedalex.dev/style.css?h=9d7ecd4f8880be528465">
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="Feed" href="https://confusedalex.dev/atom.xml">
+    
+    <script data-goatcounter="https://stats.confusedalex.dev/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+    
+<header class="space">
+    <a href="https:&#x2F;&#x2F;confusedalex.dev">&LeftArrow; Home</a>
+</header>
+
+    
+<main>
+    <h1>SCP, my beloved</h1>
+    
+    <p class="secondary">6 January, 2024</p>
+    
+    <div class="space"></div>
+    <h1 id="introduction">Introduction</h1>
+<p>Have you ever struggled to find the perfect tool for transferring files, which is easy to use and broadly available? If so, you are not alone, and I think I might have found the solution called &quot;scp.&quot;</p>
+<h1 id="what-is-scp">What is SCP?</h1>
+<p>SCP is a program shipped with OpenSSH, allowing you to copy files between two hosts over a network. Since it's shipped with OpenSSH, it should be available on most of your computers, making it convenient to use. For SCP to work, you need to point it to a running SSH server. Now let's look at some examples of how to use SCP.</p>
+<h1 id="how-to-use-scp">How to use SCP:</h1>
+<p>Copying a local file to a remote host:</p>
+<pre data-lang="bash" style="background-color:#282828;color:#fdf4c1aa;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#fdf4c1;">scp localFile user@remotehost:path/to/target
+</span></code></pre>
+<p>And in reverse:</p>
+<pre data-lang="bash" style="background-color:#282828;color:#fdf4c1aa;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#fdf4c1;">scp user@remotehost:path/to/remotefile /path/to/target
+</span></code></pre>
+<p>To transfer whole folders, just point to a directory and use the <code>-r</code> flag to let scp run recursive.</p>
+<p>In short, SCP simplifies file transfers with its straightforward approach. Next time you're stuck, remember SCP—it's a lifesaver.</p>
+
+</main>
+<footer>
+    <script src="https://giscus.app/client.js"
+        data-repo="confusedalex/blog"
+        data-repo-id="R_kgDOLBTiSw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOLBTiS84CcObr"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="noborder_dark"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</footer>
+
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="https://confusedalex.dev/icons/dark_mode.svg" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="https://confusedalex.dev/icons/light_mode.svg" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.body.classList;
+        const getSessionTheme = sessionStorage.getItem("theme");
+        if (getSessionTheme === "dark") {
+            cls.toggle("dark-mode", true);
+        } else if (getSessionTheme === "light") {
+            cls.toggle("dark-mode", false);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            cls.toggle("dark-mode", true);
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", true);
+            sessionStorage.setItem("theme", "dark");
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", false);
+            sessionStorage.setItem("theme", "light");
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>
